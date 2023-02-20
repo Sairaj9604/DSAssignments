@@ -1,0 +1,75 @@
+Q1. What is an API? Give an example, where an API is used in real life.
+APIs are mechanisms that enable two software components to communicate with each other using a set of definitions and protocols. 
+For example, the weather bureau's software system contains daily weather data. The weather app on your phone “talks” to this system via APIs and shows you daily weather updates on your phone.
+
+Q2. Give advantages and disadvantages of using API.
+Advantages-
+Increased Visibility and Traffic
+First, it allows you to share your data and functionality with a broader audience, increasing traffic and visibility for your website or app.
+
+Seamless Integration
+It makes it easy to integrate with other applications and services, saving you time and money.
+
+Increased Efficiency
+It allows you to access data and functionality without navigating multiple menus or screens. This can speed up the development process and make your app or website more user-friendly.
+
+Easier Maintenance
+It reduces the amount of work needed on the back-end, making maintenance and updates more effortless and less time-consuming.
+
+Disadvantages - 
+
+Increased Complexity
+First, they can be complex and challenging to use, making them challenging for novice developers.
+
+Limited Functionality
+They may not have all the functionality you need, requiring additional development work.
+
+Dependency on Third Party Services
+If it depends on a third-party service, your application will also be unavailable.
+
+Security and Privacy Risks
+They can pose security and privacy risks if they’re not implemented correctly. Therefore, it’s essential to carefully consider these risks before using them in your application.
+
+Q3. What is a Web API? Differentiate between API and Web API.
+A Web API is an application programming interface for the Web. A Browser API can extend the functionality of a web browser. A Server API can extend the functionality of a web server.
+
+Difference
+Web API supports protocol for HTTP/s protocol and URL requests/responses headers that enable services to reach various clients through the web. On the other hand, all communication in the REST API is supported only through HTTP protocol.
+
+Although APIs perform identical tasks, a Web API provides flexibility to any style of communication. Whereas a REST API can take advantage of using REST, SOAP, and XML-RPC for communication.
+
+As Web APIs are lightweight architecture, they are designed for gadgets constrained to devices like smartphones. In contrast, REST APIs send and receive data over systems making it a complex architecture.
+
+Web API can be hosted only on an Internet Information Service (IIS) or self that supports XML and JSON requests. In contrast, REST API can be hosted only on IIS that supports standardized XML requests.
+
+Q4. Explain REST and SOAP Architecture. Mention shortcomings of SOAP.
+
+RESTful API is an interface that two computer systems use to exchange information securely over the internet. Most business applications have to communicate with other internal and third-party applications to perform various tasks.
+
+SOAP is the Simple Object Access Protocol, a messaging standard defined by the World Wide Web Consortium and its member editors. SOAP uses an XML data format to declare its request and response messages, relying on XML Schema and other technologies to enforce the structure of its payloads.
+
+
+SOAP only uses XML. It doesn’t take other formats like JSON into consideration.
+There is a high possibility of coupling between client and server as SOAP is based on contract.
+Since it uses XML format, SOAP is considered to be a slow platform because the payload is large for a simple string message.
+Any change in server contract is reflected in client stub classes.
+SOAP is hard to test in browsers.
+SOAP clients do not hold any stateful references to remote objects.
+
+Q5. Differentiate between REST and SOAP.
+
+1.
+Relies on REST (Representational State Transfer) architecture using HTTP.
+Relies on SOAP (Simple Object Access Protocol)	
+2.
+Generally transports data in JSON. It is based on URI. Because REST follows stateless model, REST does not enforces message format as XML or JSON etc.
+Transports data in standard XML format.	
+3.
+It works with GET, POST, PUT, DELETE
+Because it is XML based and relies on SOAP, it works with WSDL	
+4.
+Works over HTTP and HTTPS
+Works over HTTP, HTTPS, SMTP, XMPP	
+5.
+Less structured -> less bulky data
+Highly structured/typed	
