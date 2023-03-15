@@ -1,0 +1,193 @@
+Q1. Explain the assumptions required to use ANOVA and provide examples of violations that could impact
+the validity of the results.
+ANOVA (Analysis of Variance) is a statistical method used to compare the means of three or more groups of data. To use ANOVA, the following assumptions must be met:
+
+Independence: The observations in each group must be independent of each other.
+Normality: The data in each group should follow a normal distribution.
+Homogeneity of variance: The variance of each group should be approximately equal.
+If any of these assumptions are violated, it can impact the validity of the ANOVA results. For example:
+
+Violation of independence: If the observations in each group are not independent, the variability of the observations may be overestimated, leading to an inflated F-statistic and an increased likelihood of Type I errors. An example of this violation is repeated measures on the same subjects.
+
+Violation of normality: If the data in each group does not follow a normal distribution, the ANOVA may be less powerful, and the results may not be reliable. An example of this violation is data that is highly skewed or has outliers.
+
+Violation of homogeneity of variance: If the variance of the groups is not equal, the F-statistic may be biased, leading to incorrect conclusions. An example of this violation is when one group has much larger variance than the other groups.
+
+
+Q2. What are the three types of ANOVA, and in what situations would each be used?
+
+One-way ANOVA: This type of ANOVA is used to compare the means of three or more groups based on one categorical independent variable. For example, a one-way ANOVA could be used to compare the average height of plants grown under different fertilizers.
+
+Two-way ANOVA: This type of ANOVA is used to compare the means of three or more groups based on two independent variables. For example, a two-way ANOVA could be used to compare the average salary of employees based on both their education level and their years of experience.
+
+Repeated measures ANOVA: This type of ANOVA is used to compare the means of three or more groups when the same individuals are measured at multiple time points or under multiple conditions. For example, a repeated measures ANOVA could be used to compare the reaction times of individuals before and after receiving a treatment.
+
+
+Q3. What is the partitioning of variance in ANOVA, and why is it important to understand this concept?
+
+The partitioning of variance in ANOVA refers to the division of total variance in the data into different components or sources of variation. In ANOVA, the total variance in the data is divided into two types: variance due to differences between groups and variance due to differences within groups. By partitioning the variance in this way, ANOVA can determine whether there are significant differences between groups and, if so, whether those differences are larger than the differences within groups.
+
+The partitioning of variance is important because it allows us to determine the relative importance of different sources of variation in the data. For example, in a one-way ANOVA comparing the heights of plants grown under different fertilizers, the partitioning of variance can tell us how much of the total variation in plant heights is due to the fertilizer treatment and how much is due to other factors, such as random variation or measurement error. This information is important for understanding the causes of variation in the data and for making accurate inferences about population means.
+
+Moreover, partitioning of variance helps to identify the effects of different factors in the experiment, such as treatment, interaction, and error effects. This information is essential for interpreting the results of ANOVA and determining the significance of the factors in the experiment.
+
+
+Q4. How would you calculate the total sum of squares (SST), explained sum of squares (SSE), and residual
+sum of squares (SSR) in a one-way ANOVA using Python?
+
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+# Generate sample data
+data = {'Group1': [5, 7, 9, 8, 10], 
+        'Group2': [2, 4, 6, 5, 7], 
+        'Group3': [1, 3, 5, 4, 6]}
+df = pd.DataFrame(data)
+
+# Fit one-way ANOVA model
+model = ols('value ~ C(group)', data=pd.melt(df)).fit()
+anova_table = sm.stats.anova_lm(model, typ=2)
+
+# Calculate SST
+sst = np.sum((df - np.mean(df))**2)
+
+# Calculate SSE
+sse = np.sum((anova_table['sum_sq'][:-1]))
+
+# Calculate SSR
+ssr = np.sum(anova_table['sum_sq'][-1:])
+
+
+Q5. In a two-way ANOVA, how would you calculate the main effects and interaction effects using Python?
+
+import pandas as pd
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+# load data into a pandas dataframe
+data = pd.read_csv('data.csv')
+
+# define ANOVA model with interaction term
+model = ols('outcome ~ C(factor1) + C(factor2) + C(factor1):C(factor2)', data=data).fit()
+
+# display ANOVA results
+print(model.summary())
+
+
+Q6. Suppose you conducted a one-way ANOVA and obtained an F-statistic of 5.23 and a p-value of 0.02.
+What can you conclude about the differences between the groups, and how would you interpret these
+results?
+
+A one-way ANOVA with an F-statistic of 5.23 and a p-value of 0.02 indicates that there are significant differences between the means of the groups being compared. The p-value of 0.02 suggests that there is strong evidence against the null hypothesis, which states that the means of the groups are equal.
+
+Therefore, we reject the null hypothesis and conclude that at least one of the groups has a significantly different mean from the others. The magnitude of the F-statistic suggests that the differences between the groups are not likely due to random chance alone.
+
+To interpret these results further, post-hoc tests could be conducted to determine which specific groups have significantly different means.
+
+
+Q7. In a repeated measures ANOVA, how would you handle missing data, and what are the potential
+consequences of using different methods to handle missing data?
+
+In a repeated measures ANOVA, missing data can be handled in several ways. One common approach is to use the mean of the available scores for that subject as a replacement for the missing value. This is called mean imputation. Another approach is to use regression imputation, where a regression equation is developed based on the available data, and the missing values are estimated based on the values of other variables.
+
+However, different methods of handling missing data can result in different conclusions. For example, if the missing data are not missing at random, the results can be biased. In this case, mean imputation can lead to an underestimation of the standard error, while regression imputation can result in a biased estimate of the slope. It is therefore important to carefully consider the nature of the missing data and the assumptions underlying the imputation method when handling missing data in a repeated measures ANOVA.
+
+
+Q8. What are some common post-hoc tests used after ANOVA, and when would you use each one? Provide
+an example of a situation where a post-hoc test might be necessary.
+
+Post-hoc tests are used after ANOVA to identify which groups differ significantly from one another when there is a significant main effect or interaction effect. Some common post-hoc tests include Tukey's Honestly Significant Difference (HSD), Scheffe's method, Bonferroni correction, and the Fisher's Least Significant Difference (LSD) test.
+
+Tukey's HSD test is used to compare all pairs of means in a one-way ANOVA, and it controls for Type I error rates by adjusting the p-value for each pairwise comparison. Scheffe's method is a more conservative post-hoc test that can be used in any ANOVA design, but it has lower power than Tukey's HSD. Bonferroni correction is a simple method that divides the alpha level by the number of comparisons being made, but it can be overly conservative when there are many pairwise comparisons. Fisher's LSD test is a simple post-hoc test that can be used in a one-way ANOVA when the assumption of equal variances is met.
+
+An example situation where a post-hoc test might be necessary is a study comparing the effectiveness of three different treatments for a medical condition. The ANOVA might reveal a significant main effect, indicating that there is a difference between the treatments, but a post-hoc test would be necessary to determine which treatments are significantly different from each other.
+
+
+Q9. A researcher wants to compare the mean weight loss of three diets: A, B, and C. They collect data from 50 participants who were randomly assigned to one of the diets. Conduct a one-way ANOVA using Python to determine if there are any significant differences between the mean weight loss of the three diets. Report the F-statistic and p-value, and interpret the results.
+
+
+import numpy as np
+from scipy.stats import f_oneway
+
+# Generate fake weight loss data
+np.random.seed(123)
+diet_a = np.random.normal(loc=10, scale=2, size=50)
+diet_b = np.random.normal(loc=8, scale=3, size=50)
+diet_c = np.random.normal(loc=6, scale=1, size=50)
+
+# Perform one-way ANOVA
+f_stat, p_val = f_oneway(diet_a, diet_b, diet_c)
+
+# Print results
+print("F-statistic:", f_stat)
+print("p-value:", p_val)
+
+output:
+
+F-statistic: 46.72883555472511
+p-value: 1.0522903527416827e-14
+
+
+Q10. A company wants to know if there are any significant differences in the average time it takes tocomplete a task using three different software programs: Program A, Program B, and Program C. They randomly assign 30 employees to one of the programs and record the time it takes each employee to complete the task. Conduct a two-way ANOVA using Python to determine if there are any main effects or interaction effects between the software programs and employee experience level (novice vs. experienced). Report the F-statistics and p-values, and interpret the results.
+
+import pandas as pd
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+data = pd.read_csv('task_completion_times.csv')
+model = ols('time ~ program + experience + program:experience', data=data).fit()
+table = sm.stats.anova_lm(model, typ=2)
+print(table)
+
+output:
+
+                        sum_sq     df          F        PR(>F)
+program              1.330748    2.0   7.678574  9.410532e-04
+experience           0.112055    1.0   0.809230  3.696849e-01
+program:experience   0.277100    2.0   1.597335  2.200631e-01
+Residual            22.281148  174.0        NaN           NaN
+
+
+Q11. An educational researcher is interested in whether a new teaching method improves student test scores. They randomly assign 100 students to either the control group (traditional teaching method) or the experimental group (new teaching method) and administer a test at the end of the semester. Conduct a two-sample t-test using Python to determine if there are any significant differences in test scores between the two groups. If the results are significant, follow up with a post-hoc test to determine which group(s) differ significantly from each other.
+
+
+import pandas as pd
+from scipy.stats import ttest_ind
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+
+# read in data and create two groups
+data = pd.read_csv('data.csv')
+control_group = data[data['Teaching Method'] == 'Control']['Test Score']
+experimental_group = data[data['Teaching Method'] == 'Experimental']['Test Score']
+
+# conduct two-sample t-test
+t, p = ttest_ind(control_group, experimental_group)
+print('Two-sample t-test:')
+print('t =', t)
+print('p =', p)
+
+# conduct post-hoc test
+tukey_results = pairwise_tukeyhsd(data['Test Score'], data['Teaching Method'])
+print('Post-hoc test (Tukey HSD):')
+print(tukey_results)
+
+
+Q12. A researcher wants to know if there are any significant differences in the average daily sales of three retail stores: Store A, Store B, and Store C. They randomly select 30 days and record the sales for each store on those days. Conduct a repeated measures ANOVA using Python to determine if there are any significant differences in sales between the three stores. If the results are significant, follow up with a post- hoc test to determine which store(s) differ significantly from each other.
+
+import pandas as pd
+import scipy.stats as stats
+
+# create a DataFrame with daily sales for each store
+data = {'Store A': [100, 120, 90, 110, 95, 105, 115, 105, 100, 90, 105, 110, 120, 100, 110, 105, 115, 90, 100, 120, 110, 95, 105, 115, 105, 100, 90, 105, 110, 120],
+        'Store B': [90, 85, 80, 100, 110, 95, 100, 105, 95, 85, 80, 100, 110, 95, 100, 105, 95, 85, 80, 100, 110, 95, 100, 105, 95, 85, 80, 100, 110, 95],
+        'Store C': [120, 100, 110, 105, 115, 90, 100, 120, 110, 95, 105, 115, 90, 100, 120, 110, 105, 115, 90, 100, 120, 110, 95, 105, 115, 90, 100, 120, 110, 95]}
+
+df = pd.DataFrame(data)
+
+# conduct a one-way ANOVA
+f_stat, p_val = stats.f_oneway(df['Store A'], df['Store B'], df['Store C'])
+
+print("F-statistic:", f_stat)
+print("p-value:", p_val)
